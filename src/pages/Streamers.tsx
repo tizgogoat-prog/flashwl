@@ -9,7 +9,7 @@ const streamers = [
     avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=StreamerGTA",
     platform: "Twitch",
     followers: "15.2K",
-    description: "Streamer officiel CityBack - RP quotidien",
+    description: "Streamer officiel Cityland WL - RP quotidien",
     isLive: true,
     links: ["twitch", "twitter"],
   },
@@ -73,7 +73,7 @@ const Streamers = () => {
               Nos Streamers Partenaires
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Découvrez les créateurs de contenu qui font vivre CityBack au quotidien. 
+              Découvrez les créateurs de contenu qui font vivre Cityland WL au quotidien. 
               Suivez-les pour ne rien rater de l'action !
             </p>
           </div>
@@ -144,10 +144,10 @@ const Streamers = () => {
               Devenir Streamer Partenaire
             </h2>
             <p className="text-muted-foreground mb-6">
-              Tu streames régulièrement sur CityBack ? Rejoins notre programme partenaire !
+              Tu streames régulièrement sur Cityland WL ? Rejoins notre programme partenaire !
             </p>
             <a
-              href="https://discord.gg/56SWvhqXuE"
+              href="https://discord.gg/citybackfa"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
