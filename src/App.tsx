@@ -9,6 +9,7 @@ import Streamers from "./pages/Streamers";
 import Boutique from "./pages/Boutique";
 import MDT from "./pages/MDT";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,7 +27,7 @@ const App = () => (
           <Route path="/boutique" element={<Boutique />} />
           <Route path="/mdt" element={<MDT />} />
           <Route path="/login" element={<Login />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

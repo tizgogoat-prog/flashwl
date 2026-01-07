@@ -13,12 +13,12 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-          CityBack est un serveur GTA RP FiveM offrant une expérience roleplay immersive et unique. Créez votre histoire dans notre ville.
+          Cityland WL est un serveur GTA RP FiveM offrant une expérience roleplay immersive et unique. Créez votre histoire dans notre ville.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://discord.gg/56SWvhqXuE"
+            href="https://discord.gg/citybackfa"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary flex items-center justify-center gap-2"
@@ -27,7 +27,7 @@ const HeroSection = () => {
             <ExternalLink className="w-4 h-4" />
           </a>
           <a
-            href="fivem://connect/play.cityback.fr"
+            href="fivem://connect/play.cityland.fr"
             className="btn-outline flex items-center justify-center gap-2"
           >
             Jouer maintenant
