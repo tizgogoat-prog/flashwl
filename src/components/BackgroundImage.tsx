@@ -1,14 +1,20 @@
-import heroBg from "@/assets/hero-bg.jpg";
 import logo from "@/assets/logo.png";
 
 const BackgroundImage = () => {
   return (
     <>
-      {/* Background Image */}
-      <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
+      {/* Background Video */}
+      <div className="fixed inset-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-30"
+        >
+          <source src="/videos/bg-video.mp4" type="video/mp4" />
+        </video>
+      </div>
       
       {/* Gradient Overlay */}
       <div className="fixed inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
