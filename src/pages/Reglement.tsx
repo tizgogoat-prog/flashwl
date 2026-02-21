@@ -72,6 +72,30 @@ const Reglement = () => {
             </div>
           </div>
 
+          {/* Category Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <a href="#global" className="category-card">
+              <Globe className="feature-icon" />
+              <h3 className="text-xl font-semibold mb-2">Global</h3>
+              <p className="text-muted-foreground text-sm">Règles Discord, Général/HRP, Important, Véhicules</p>
+            </a>
+            <a href="#legal" className="category-card">
+              <Circle className="feature-icon" />
+              <h3 className="text-xl font-semibold mb-2">Légal</h3>
+              <p className="text-muted-foreground text-sm">SASP, SAMC, Government, Entreprises, Immobilier, MortRP</p>
+            </a>
+            <a href="#illegal" className="category-card">
+              <Ban className="feature-icon" />
+              <h3 className="text-xl font-semibold mb-2">Illégal</h3>
+              <p className="text-muted-foreground text-sm">Règles pour les activités illégales</p>
+            </a>
+            <a href="#notion-rp" className="category-card">
+              <MessageSquare className="feature-icon" />
+              <h3 className="text-xl font-semibold mb-2">Notion RP</h3>
+              <p className="text-muted-foreground text-sm">Concepts et termes du roleplay</p>
+            </a>
+          </div>
+
           {/* Préambule */}
           <section className="reglement-section">
             <h2>PRÉAMBULE</h2>
