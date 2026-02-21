@@ -187,18 +187,18 @@ const Reglement = () => {
           {/* CHAPITRE II - LÉGAL */}
           <section className="reglement-section" id="legal">
             <h2>CHAPITRE II. LÉGAL</h2>
-            <h3 id="sasp">SASP</h3>
-            <p>Règles spécifiques au San Andreas State Police.</p>
-            <h3 id="samc">SAMC</h3>
-            <p>Règles spécifiques au San Andreas Medical Center.</p>
+            <h3 id="sasp">SASP (San Andreas State Police)</h3>
+            <p>Les membres du SASP doivent respecter les procédures d'arrestation, de contrôle et d'intervention. La corruption modérée est autorisée mais doit rester réaliste.</p>
+            <h3 id="samc">SAMC (San Andreas Medical Center)</h3>
+            <p>Les EMS doivent soigner tous les patients sans discrimination. Le matériel médical ne doit être utilisé qu'en service.</p>
             <h3 id="government">Government</h3>
-            <p>Règles spécifiques au gouvernement.</p>
+            <p>Les membres du gouvernement représentent l'autorité de l'État. Ils doivent agir avec professionnalisme et intégrité.</p>
             <h3 id="entreprises">Entreprises</h3>
-            <p>Règles spécifiques aux entreprises légales.</p>
+            <p>Les entreprises doivent respecter les lois et réglementations en vigueur. Les employés représentent leur entreprise en tout temps.</p>
             <h3 id="immobilier">Immobilier</h3>
-            <p>Règles spécifiques à l'immobilier.</p>
+            <p>Les propriétés doivent être renouvelées régulièrement pour éviter la perte. Le squattage de propriétés abandonnées est possible sous certaines conditions RP.</p>
             <h3 id="mortrp">MortRP</h3>
-            <p>Règles spécifiques à la mort RP.</p>
+            <p>La mort RP est définitive et entraîne un wipe du personnage. Elle doit être validée par le staff selon des critères précis.</p>
           </section>
 
           {/* CHAPITRE III - ILLÉGAL */}
