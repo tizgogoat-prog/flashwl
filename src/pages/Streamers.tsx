@@ -5,8 +5,8 @@ import { Twitch, Youtube, Twitter, Users } from "lucide-react";
 
 const streamers = [
   {
-    name: "StreamerGTA",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=StreamerGTA",
+    name: "Wecheu",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Wecheu",
     platform: "Twitch",
     followers: "15.2K",
     description: "Streamer officiel Cityland WL - RP quotidien",
@@ -14,8 +14,8 @@ const streamers = [
     links: ["twitch", "twitter"],
   },
   {
-    name: "RPMaster",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=RPMaster",
+    name: "Zango",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Zango",
     platform: "Twitch",
     followers: "8.5K",
     description: "Membre du SASP - Roleplay policier",
