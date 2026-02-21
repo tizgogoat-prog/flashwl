@@ -18,7 +18,7 @@ const HeroSection = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://discord.gg/citybackfa"
+            href="https://discord.gg/gt4xYVUDXt"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-primary flex items-center justify-center gap-2"

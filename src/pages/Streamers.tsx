@@ -147,7 +147,7 @@ const Streamers = () => {
               Tu streames régulièrement sur Cityland WL ? Rejoins notre programme partenaire !
             </p>
             <a
-              href="https://discord.gg/citybackfa"
+              href="https://discord.gg/gt4xYVUDXt"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"

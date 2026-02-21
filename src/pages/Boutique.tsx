@@ -123,7 +123,7 @@ const Boutique = () => {
             <p className="text-muted-foreground">
               Les paiements sont sécurisés via Stripe. Pour toute question, contactez-nous sur{" "}
               <a
-                href="https://discord.gg/citybackfa"
+                href="https://discord.gg/gt4xYVUDXt"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
