@@ -57,8 +57,13 @@ const Reglement = () => {
                   </div>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {section.items.map((item, i) => (
-                      <li key={i} className="hover:text-foreground cursor-pointer transition-colors">
-                        {item}
+                      <li key={i}>
+                        <a 
+                          href={`#${item.toLowerCase().replace(/[^a-z0-9àâäéèêëïîôùûüÿçœæ]+/g, '-').replace(/(^-|-$)/g, '')}`}
+                          className="hover:text-foreground cursor-pointer transition-colors"
+                        >
+                          {item}
+                        </a>
                       </li>
                     ))}
                   </ul>

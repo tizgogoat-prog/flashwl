@@ -6,8 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Reglement from "./pages/Reglement";
 import Streamers from "./pages/Streamers";
-import Boutique from "./pages/Boutique";
-import MDT from "./pages/MDT";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -24,8 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/reglement" element={<Reglement />} />
           <Route path="/streamers" element={<Streamers />} />
-          <Route path="/boutique" element={<Boutique />} />
-          <Route path="/mdt" element={<MDT />} />
+          
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
