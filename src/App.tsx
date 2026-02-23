@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Reglement from "./pages/Reglement";
 import Streamers from "./pages/Streamers";
+import Whitelist from "./pages/Whitelist";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/reglement" element={<Reglement />} />
           <Route path="/streamers" element={<Streamers />} />
+          <Route path="/whitelist" element={<Whitelist />} />
           
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
