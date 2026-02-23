@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/Navbar";
 import BackgroundImage from "@/components/BackgroundImage";
 import Footer from "@/components/Footer";
@@ -47,7 +48,7 @@ const Whitelist = () => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validation
@@ -69,10 +70,31 @@ const Whitelist = () => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-whitelist", {
+        body: {
+          prenom: form.prenom.trim(),
+          age: form.age.trim(),
+          pays: form.pays.trim(),
+          disponibilites: form.disponibilites.trim(),
+          pseudoDiscord: form.pseudoDiscord.trim(),
+          idDiscord: form.idDiscord.trim(),
+          experienceTemps: form.experienceTemps.trim(),
+          experienceServeurs: form.experienceServeurs.trim(),
+          persoNom: form.persoNom.trim(),
+          persoAge: form.persoAge.trim(),
+          persoHistoire: form.persoHistoire.trim(),
+          motivation: form.motivation.trim(),
+        },
+      });
+      if (error) throw error;
       setSubmitted(true);
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+      toast({ title: "Erreur", description: "Une erreur est survenue lors de l'envoi. Réessaie plus tard.", variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
