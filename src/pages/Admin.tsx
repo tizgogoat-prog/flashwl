@@ -117,8 +117,15 @@ const Admin = () => {
     }
   };
 
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center"><div className="text-foreground">Chargement...</div></div>;
+  if (loading || !isAdmin) {
+    return (
+      <div className="min-h-screen relative">
+        <BackgroundImage />
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-foreground">Chargement...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
