@@ -42,6 +42,7 @@ const Whitelist = () => {
   const [form, setForm] = useState<FormData>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { toast } = useToast();
 
   const handleChange = (field: keyof FormData, value: string | boolean) => {
@@ -50,6 +51,8 @@ const Whitelist = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setErrorMessage(null);
 
     // Validation
     const requiredText: (keyof FormData)[] = [
@@ -60,12 +63,16 @@ const Whitelist = () => {
     ];
     for (const key of requiredText) {
       if (!(form[key] as string).trim()) {
-        toast({ title: "Champ manquant", description: "Merci de remplir tous les champs.", variant: "destructive" });
+        const msg = "Merci de remplir tous les champs.";
+        setErrorMessage(msg);
+        toast({ title: "Champ manquant", description: msg, variant: "destructive" });
         return;
       }
     }
     if (!form.reglementAccepte) {
-      toast({ title: "Règlement", description: "Tu dois accepter le règlement pour continuer.", variant: "destructive" });
+      const msg = "Tu dois accepter le règlement pour continuer.";
+      setErrorMessage(msg);
+      toast({ title: "Règlement", description: msg, variant: "destructive" });
       return;
     }
 
@@ -91,7 +98,9 @@ const Whitelist = () => {
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      toast({ title: "Erreur", description: "Une erreur est survenue lors de l'envoi. Réessaie plus tard.", variant: "destructive" });
+      const msg = "Une erreur est survenue lors de l'envoi. Réessaie plus tard.";
+      setErrorMessage(msg);
+      toast({ title: "Erreur", description: msg, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -268,6 +277,13 @@ const Whitelist = () => {
                 </span>
               </label>
             </div>
+
+            {/* Error message */}
+            {errorMessage && (
+              <div className="bg-destructive/20 border border-destructive/50 rounded-lg px-4 py-3 text-destructive text-sm font-medium text-center">
+                ⚠️ {errorMessage}
+              </div>
+            )}
 
             {/* Submit */}
             <button
