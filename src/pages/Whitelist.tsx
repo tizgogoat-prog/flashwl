@@ -49,30 +49,54 @@ const Whitelist = () => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const validateAgeRange = (value: string) => {
+    if (!/^\d{1,3}$/.test(value)) return false;
+    const num = Number.parseInt(value, 10);
+    return num >= 13 && num <= 99;
+  };
 
-    setErrorMessage(null);
-
-    // Validation
+  const validateForm = (): string | null => {
     const requiredText: (keyof FormData)[] = [
       "prenom", "age", "pays", "disponibilites",
       "pseudoDiscord", "idDiscord",
       "experienceTemps", "experienceServeurs",
       "persoNom", "persoAge", "persoHistoire", "motivation",
     ];
+
     for (const key of requiredText) {
       if (!(form[key] as string).trim()) {
-        const msg = "Merci de remplir tous les champs.";
-        setErrorMessage(msg);
-        toast({ title: "Champ manquant", description: msg, variant: "destructive" });
-        return;
+        return "Merci de remplir tous les champs.";
       }
     }
+
     if (!form.reglementAccepte) {
-      const msg = "Tu dois accepter le règlement pour continuer.";
-      setErrorMessage(msg);
-      toast({ title: "Règlement", description: msg, variant: "destructive" });
+      return "Tu dois accepter le règlement pour continuer.";
+    }
+
+    if (!validateAgeRange(form.age.trim())) {
+      return "Ton âge IRL doit être entre 13 et 99 ans (chiffres uniquement).";
+    }
+
+    if (!validateAgeRange(form.persoAge.trim())) {
+      return "L'âge du personnage doit être entre 13 et 99 ans (chiffres uniquement).";
+    }
+
+    if (!/^\d{17,20}$/.test(form.idDiscord.trim())) {
+      return "Ton ID Discord doit contenir entre 17 et 20 chiffres.";
+    }
+
+    return null;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setErrorMessage(null);
+
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMessage(validationError);
+      toast({ title: "Formulaire invalide", description: validationError, variant: "destructive" });
       return;
     }
 
@@ -94,11 +118,40 @@ const Whitelist = () => {
           motivation: form.motivation.trim(),
         },
       });
-      if (error) throw error;
+
+      if (error) {
+        let backendErrorMessage: string | null = null;
+        const context = (error as { context?: Response }).context;
+
+        if (context) {
+          try {
+            const responseBody = await context.json() as { error?: string };
+            if (typeof responseBody?.error === "string") {
+              backendErrorMessage = responseBody.error;
+            }
+          } catch {
+            // Ignore parsing failures and fallback to generic error below
+          }
+        }
+
+        throw new Error(backendErrorMessage || error.message || "Une erreur est survenue lors de l'envoi.");
+      }
+
+      const parsedData = typeof data === "object" && data !== null ? (data as Record<string, unknown>) : null;
+      if (parsedData?.success === false) {
+        throw new Error(
+          typeof parsedData.error === "string"
+            ? parsedData.error
+            : "Une erreur est survenue lors de l'envoi."
+        );
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      const msg = "Une erreur est survenue lors de l'envoi. Réessaie plus tard.";
+      const msg = err instanceof Error && err.message
+        ? err.message
+        : "Une erreur est survenue lors de l'envoi. Réessaie plus tard.";
       setErrorMessage(msg);
       toast({ title: "Erreur", description: msg, variant: "destructive" });
     } finally {
