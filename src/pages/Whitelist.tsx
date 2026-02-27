@@ -38,15 +38,31 @@ const initialForm: FormData = {
   reglementAccepte: false,
 };
 
+type FieldErrors = Partial<Record<keyof FormData, string>>;
+
+type ValidationError = {
+  message: string;
+  field?: keyof FormData;
+  fieldMessage?: string;
+};
+
 const Whitelist = () => {
   const [form, setForm] = useState<FormData>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const { toast } = useToast();
 
   const handleChange = (field: keyof FormData, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }));
+    // Clear field error as soon as user edits it
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
   };
 
   const validateAgeRange = (value: string) => {
@@ -55,48 +71,103 @@ const Whitelist = () => {
     return num >= 13 && num <= 99;
   };
 
-  const validateForm = (): string | null => {
+  const validateForm = (): ValidationError | null => {
     const requiredText: (keyof FormData)[] = [
-      "prenom", "age", "pays", "disponibilites",
-      "pseudoDiscord", "idDiscord",
-      "experienceTemps", "experienceServeurs",
-      "persoNom", "persoAge", "persoHistoire", "motivation",
+      "prenom",
+      "age",
+      "pays",
+      "disponibilites",
+      "pseudoDiscord",
+      "idDiscord",
+      "experienceTemps",
+      "experienceServeurs",
+      "persoNom",
+      "persoAge",
+      "persoHistoire",
+      "motivation",
     ];
 
     for (const key of requiredText) {
       if (!(form[key] as string).trim()) {
-        return "Merci de remplir tous les champs.";
+        return {
+          message: "Merci de remplir tous les champs.",
+          field: key,
+          fieldMessage: "Champ obligatoire.",
+        };
       }
     }
 
     if (!form.reglementAccepte) {
-      return "Tu dois accepter le règlement pour continuer.";
+      return {
+        message: "Tu dois accepter le règlement pour continuer.",
+        field: "reglementAccepte",
+        fieldMessage: "Obligatoire.",
+      };
     }
 
     if (!validateAgeRange(form.age.trim())) {
-      return "Ton âge IRL doit être entre 13 et 99 ans (chiffres uniquement).";
+      return {
+        message: "Ton âge IRL doit être entre 13 et 99 ans (chiffres uniquement).",
+        field: "age",
+        fieldMessage: "Âge invalide (13–99).",
+      };
     }
 
     if (!validateAgeRange(form.persoAge.trim())) {
-      return "L'âge du personnage doit être entre 13 et 99 ans (chiffres uniquement).";
+      return {
+        message: "L'âge du personnage doit être entre 13 et 99 ans (chiffres uniquement).",
+        field: "persoAge",
+        fieldMessage: "Âge invalide (13–99).",
+      };
     }
 
     if (!/^\d{17,20}$/.test(form.idDiscord.trim())) {
-      return "Ton ID Discord doit contenir entre 17 et 20 chiffres.";
+      return {
+        message: "Ton ID Discord doit contenir entre 17 et 20 chiffres.",
+        field: "idDiscord",
+        fieldMessage: "ID invalide (17–20 chiffres).",
+      };
     }
 
     return null;
+  };
+
+  const focusInvalidField = (field: keyof FormData) => {
+    // Checkbox special case
+    if (field === "reglementAccepte") {
+      const el = document.getElementById("reglementAccepte");
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      (el as HTMLInputElement | null)?.focus?.();
+      return;
+    }
+
+    const el = document.querySelector(`[name="${field}"]`) as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | null;
+
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.focus?.();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setErrorMessage(null);
+    setFieldErrors({});
 
     const validationError = validateForm();
     if (validationError) {
-      setErrorMessage(validationError);
-      toast({ title: "Formulaire invalide", description: validationError, variant: "destructive" });
+      setErrorMessage(validationError.message);
+      if (validationError.field && validationError.fieldMessage) {
+        setFieldErrors({ [validationError.field]: validationError.fieldMessage });
+        focusInvalidField(validationError.field);
+      }
+      toast({
+        title: "Formulaire invalide",
+        description: validationError.message,
+        variant: "destructive",
+      });
       return;
     }
 
@@ -125,7 +196,7 @@ const Whitelist = () => {
 
         if (context) {
           try {
-            const responseBody = await context.json() as { error?: string };
+            const responseBody = (await context.json()) as { error?: string };
             if (typeof responseBody?.error === "string") {
               backendErrorMessage = responseBody.error;
             }
@@ -139,19 +210,13 @@ const Whitelist = () => {
 
       const parsedData = typeof data === "object" && data !== null ? (data as Record<string, unknown>) : null;
       if (parsedData?.success === false) {
-        throw new Error(
-          typeof parsedData.error === "string"
-            ? parsedData.error
-            : "Une erreur est survenue lors de l'envoi."
-        );
+        throw new Error(typeof parsedData.error === "string" ? parsedData.error : "Une erreur est survenue lors de l'envoi.");
       }
 
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      const msg = err instanceof Error && err.message
-        ? err.message
-        : "Une erreur est survenue lors de l'envoi. Réessaie plus tard.";
+      const msg = err instanceof Error && err.message ? err.message : "Une erreur est survenue lors de l'envoi. Réessaie plus tard.";
       setErrorMessage(msg);
       toast({ title: "Erreur", description: msg, variant: "destructive" });
     } finally {
@@ -254,6 +319,13 @@ const Whitelist = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Error message (sticky) */}
+            {errorMessage && (
+              <div className="sticky top-20 z-40 bg-destructive/15 border border-destructive/40 rounded-lg px-4 py-3 text-destructive text-sm font-medium text-center backdrop-blur">
+                ⚠️ {errorMessage}
+              </div>
+            )}
+
             {sections.map((section, idx) => (
               <div key={idx} className="glass-card p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-6">
@@ -265,32 +337,50 @@ const Whitelist = () => {
                 </div>
 
                 <div className="space-y-5">
-                  {section.fields.map((field) => (
-                    <div key={field.key}>
-                      <label className="block text-sm font-medium text-foreground mb-2">
-                        {field.label} <span className="text-destructive">*</span>
-                      </label>
-                      {field.type === "input" ? (
-                        <input
-                          type="text"
-                          value={form[field.key] as string}
-                          onChange={(e) => handleChange(field.key, e.target.value)}
-                          placeholder={field.placeholder}
-                          maxLength={200}
-                          className="w-full bg-muted/50 border border-border/50 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
-                        />
-                      ) : (
-                        <textarea
-                          value={form[field.key] as string}
-                          onChange={(e) => handleChange(field.key, e.target.value)}
-                          placeholder={field.placeholder}
-                          maxLength={field.type === "textarea-lg" ? 2000 : 500}
-                          rows={field.type === "textarea-lg" ? 6 : 3}
-                          className="w-full bg-muted/50 border border-border/50 rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all resize-none"
-                        />
-                      )}
-                    </div>
-                  ))}
+                  {section.fields.map((field) => {
+                    const hasError = Boolean(fieldErrors[field.key]);
+                    const baseClass =
+                      "w-full bg-muted/50 border rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 transition-all";
+
+                    const okClass = "border-border/50 focus:ring-primary/50 focus:border-primary/50";
+                    const errClass = "border-destructive/60 ring-2 ring-destructive/20 focus:ring-destructive/30 focus:border-destructive/60";
+
+                    return (
+                      <div key={field.key}>
+                        <label className="block text-sm font-medium text-foreground mb-2">
+                          {field.label} <span className="text-destructive">*</span>
+                        </label>
+
+                        {field.type === "input" ? (
+                          <input
+                            type="text"
+                            name={field.key}
+                            aria-invalid={hasError}
+                            value={form[field.key] as string}
+                            onChange={(e) => handleChange(field.key, e.target.value)}
+                            placeholder={field.placeholder}
+                            maxLength={200}
+                            className={`${baseClass} ${hasError ? errClass : okClass}`}
+                          />
+                        ) : (
+                          <textarea
+                            name={field.key}
+                            aria-invalid={hasError}
+                            value={form[field.key] as string}
+                            onChange={(e) => handleChange(field.key, e.target.value)}
+                            placeholder={field.placeholder}
+                            maxLength={field.type === "textarea-lg" ? 2000 : 500}
+                            rows={field.type === "textarea-lg" ? 6 : 3}
+                            className={`${baseClass} resize-none ${hasError ? errClass : okClass}`}
+                          />
+                        )}
+
+                        {hasError && (
+                          <p className="mt-2 text-sm text-destructive">{fieldErrors[field.key]}</p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -308,14 +398,25 @@ const Whitelist = () => {
               <label className="flex items-start gap-3 cursor-pointer group">
                 <div className="relative mt-0.5">
                   <input
+                    id="reglementAccepte"
                     type="checkbox"
                     checked={form.reglementAccepte}
                     onChange={(e) => handleChange("reglementAccepte", e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-5 h-5 rounded border-2 border-border peer-checked:border-primary peer-checked:bg-primary transition-all flex items-center justify-center">
+                  <div
+                    className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${
+                      fieldErrors.reglementAccepte ? "border-destructive" : "border-border"
+                    } peer-checked:border-primary peer-checked:bg-primary`}
+                  >
                     {form.reglementAccepte && (
-                      <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <svg
+                        className="w-3 h-3 text-primary-foreground"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     )}
@@ -323,20 +424,22 @@ const Whitelist = () => {
                 </div>
                 <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                   J'ai lu et j'accepte le{" "}
-                  <a href="/reglement" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="/reglement"
+                    className="text-primary hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     règlement de Cityland WL
                   </a>{" "}
                   <span className="text-destructive">*</span>
                 </span>
               </label>
-            </div>
 
-            {/* Error message */}
-            {errorMessage && (
-              <div className="bg-destructive/20 border border-destructive/50 rounded-lg px-4 py-3 text-destructive text-sm font-medium text-center">
-                ⚠️ {errorMessage}
-              </div>
-            )}
+              {fieldErrors.reglementAccepte && (
+                <p className="mt-3 text-sm text-destructive">{fieldErrors.reglementAccepte}</p>
+              )}
+            </div>
 
             {/* Submit */}
             <button
