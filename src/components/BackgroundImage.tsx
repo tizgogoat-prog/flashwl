@@ -4,7 +4,7 @@ const BackgroundImage = () => {
   return (
     <>
       {/* Background Video */}
-      <div className="fixed inset-0 overflow-hidden">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <video
           autoPlay
           loop
@@ -17,7 +17,7 @@ const BackgroundImage = () => {
       </div>
       
       {/* Gradient Overlay */}
-      <div className="fixed inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background" />
+      <div className="fixed inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background pointer-events-none" />
       
       {/* Large Logo Watermark */}
       <div className="fixed bottom-0 left-0 opacity-10 pointer-events-none">
