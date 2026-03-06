@@ -13,32 +13,46 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-sm">
+      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center shrink-0">
           <img src={logo} alt="Cityland WL Logo" className="h-10 w-auto" />
         </Link>
 
-        <div className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`nav-link ${
-                location.pathname === link.path ? "nav-link-active" : ""
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
+        {/* Nav Links - Center */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.path;
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="relative text-sm font-medium tracking-wider transition-colors duration-200 group"
+              >
+                <span className={isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}>
+                  {link.name}
+                </span>
+                {/* Red underline indicator */}
+                <span
+                  className={`absolute -bottom-1 left-0 right-0 h-[2px] bg-destructive transition-transform duration-200 origin-left ${
+                    isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-4">
+        {/* Right side - Status + Socials + Login */}
+        <div className="flex items-center gap-5">
+          {/* Server Status */}
           <div className="flex items-center gap-2 text-sm">
             <span className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
-            <span className="text-muted-foreground hidden sm:inline">Serveur Hors-Ligne</span>
+            <span className="text-muted-foreground hidden sm:inline text-xs tracking-wide">Serveur Hors-Ligne</span>
           </div>
 
+          {/* Social Icons */}
           <div className="hidden lg:flex items-center gap-3">
             <a href="https://www.tiktok.com/@citybackfaa" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

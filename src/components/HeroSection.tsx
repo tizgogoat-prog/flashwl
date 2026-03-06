@@ -1,39 +1,25 @@
-import { ExternalLink, Gamepad2 } from "lucide-react";
 import fleche from "@/assets/fleche.png";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-16">
       <div className="text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-medium mb-4 text-foreground tracking-tight">
           Rejoignez l'aventure
-          <br />
-          <span className="text-foreground">Devenez </span>
-          <span className="gradient-text italic">qui vous voulez !</span>
         </h1>
         
-        <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-          Cityland WL est un serveur GTA RP FiveM offrant une expérience roleplay immersive et unique. Créez votre histoire dans notre ville.
+        <p className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-foreground mb-12">
+          Devenez qui vous voulez !
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="https://discord.gg/EEwZz2bbxU"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary flex items-center justify-center gap-2"
-          >
-            Nous rejoindre
-            <ExternalLink className="w-4 h-4" />
-          </a>
-          <a
-            href="fivem://connect/play.cityland.fr"
-            className="btn-outline flex items-center justify-center gap-2"
-          >
-            Jouer maintenant
-            <Gamepad2 className="w-4 h-4" />
-          </a>
-        </div>
+        <a
+          href="https://discord.gg/EEwZz2bbxU"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-card/80 hover:bg-card border border-border/50 text-foreground px-10 py-4 text-lg font-semibold tracking-wide transition-all duration-200 hover:scale-105"
+        >
+          Nous Rejoindre
+        </a>
       </div>
       
       {/* Scroll Indicator */}
