@@ -1,16 +1,14 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import heroBg from "@/assets/hero-bg.jpg";
-import BackgroundImage from "@/components/BackgroundImage";
 import Footer from "@/components/Footer";
-import { Globe, Circle, Ban, MessageSquare, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const categories = [
-  { id: "global", icon: "🌐", label: "Global", color: "text-primary" },
-  { id: "legal", icon: "⚖️", label: "Légal", color: "text-primary", hasDropdown: true },
-  { id: "illegal", icon: "💀", label: "Illégal", color: "text-secondary", hasDropdown: true },
-  { id: "notion-rp", icon: "💡", label: "Notions du RP", color: "text-primary" },
+  { id: "global", icon: "🌐", label: "Global" },
+  { id: "legal", icon: "⚖️", label: "Légal", hasDropdown: true },
+  { id: "illegal", icon: "💀", label: "Illégal", hasDropdown: true },
+  { id: "notion-rp", icon: "💡", label: "Notions du RP" },
 ];
 
 const Reglement = () => {
@@ -27,7 +25,6 @@ const Reglement = () => {
       {/* Reglement Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo + Title */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
             <img src={logo} alt="Cityland WL" className="h-10 w-auto" />
             <span className="text-foreground font-bold text-lg tracking-wide">
@@ -35,7 +32,6 @@ const Reglement = () => {
             </span>
           </Link>
 
-          {/* Categories Nav */}
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/"
@@ -62,16 +58,20 @@ const Reglement = () => {
         </div>
       </nav>
 
-      {/* Hero Banner */}
+      {/* Hero Banner with Video Background */}
       <section className="relative h-[70vh] flex flex-col items-center justify-center overflow-hidden">
-        {/* Background Image */}
+        {/* Video Background */}
         <div className="absolute inset-0">
-          <img
-            src={heroBg}
-            alt=""
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-background/40" />
+          >
+            <source src="/videos/bg-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-background/50" />
         </div>
 
         {/* Content */}
@@ -95,9 +95,21 @@ const Reglement = () => {
 
       {/* Rules Content */}
       <main className="relative z-10 py-16 px-4">
-        <BackgroundImage />
-        <div className="container mx-auto max-w-5xl relative z-10">
+        {/* Background video for content area */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-20"
+          >
+            <source src="/videos/bg-video.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background pointer-events-none" />
+        </div>
 
+        <div className="container mx-auto max-w-5xl relative z-10">
           {/* PRÉAMBULE */}
           <section className="reglement-section">
             <h2>PRÉAMBULE</h2>
@@ -111,7 +123,6 @@ const Reglement = () => {
           {/* CHAPITRE I - GLOBAL */}
           <section className="reglement-section" id="global">
             <h2>CHAPITRE I. GLOBAL</h2>
-            
             <h3 id="discord">Règles Discord</h3>
             <ul>
               <li>1. Faites preuve de respect envers chaque membre. Tout comportement abusif, insultant ou discriminatoire (harcèlement, intimidation, discours haineux, racisme, homophobie, sexisme, etc.) est strictement interdit.</li>
@@ -126,7 +137,6 @@ const Reglement = () => {
               <li>10. Tout non-respect des règles peut entraîner des avertissements, des sanctions temporaires ou un bannissement définitif, selon la gravité de l'infraction.</li>
               <li>11. Si vous avez une question ou un problème, utilisez le système de tickets pour contacter l'équipe de modération.</li>
             </ul>
-            
             <h3 id="general-hrp">Général/HRP</h3>
             <ul>
               <li>1. Faites preuve de respect envers chaque membre. Tout comportement abusif, insultant ou discriminatoire est strictement interdit.</li>
@@ -158,7 +168,6 @@ const Reglement = () => {
               <p>• Passage illégal/légal interdit sans wipe</p>
               <p>• Un nouveau personnage ne peut pas être lié à l'ancien</p>
             </ul>
-            
             <h3 id="important">Important</h3>
             <ul>
               <li>1. Interdictions strictes :</li>
@@ -179,7 +188,6 @@ const Reglement = () => {
               <p>• Mémoire pré-coma conservée</p>
               <p>• Aucune vengeance après un coma</p>
             </ul>
-            
             <h3 id="vehicules">Gestion des Véhicules</h3>
             <ul>
               <li>Le serveur dispose de plusieurs systèmes de gestion des véhicules pour garantir un usage organisé et réaliste.</li>
