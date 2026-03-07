@@ -1,102 +1,104 @@
-import Navbar from "@/components/Navbar";
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
+import heroBg from "@/assets/hero-bg.jpg";
 import BackgroundImage from "@/components/BackgroundImage";
 import Footer from "@/components/Footer";
-import { Globe, Circle, Ban, MessageSquare } from "lucide-react";
+import { Globe, Circle, Ban, MessageSquare, ChevronDown } from "lucide-react";
+import { useState } from "react";
 
-const shortcuts = {
-  global: {
-    icon: Globe,
-    title: "Global",
-    color: "text-primary",
-    items: ["Règles Discord", "Général/HRP", "Important", "Gestion des véhicules"],
-  },
-  legal: {
-    icon: Circle,
-    title: "Légal",
-    color: "text-primary",
-    items: ["SASP", "SAMC", "Government", "Entreprises", "Immobilier", "MortRP"],
-  },
-  illegal: {
-    icon: Ban,
-    title: "Illégal",
-    color: "text-secondary",
-    items: ["Règles Illégal"],
-  },
-  notionRP: {
-    icon: MessageSquare,
-    title: "Notion RP",
-    color: "text-primary",
-    items: [],
-  },
-};
+const categories = [
+  { id: "global", icon: "🌐", label: "Global", color: "text-primary" },
+  { id: "legal", icon: "⚖️", label: "Légal", color: "text-primary", hasDropdown: true },
+  { id: "illegal", icon: "💀", label: "Illégal", color: "text-secondary", hasDropdown: true },
+  { id: "notion-rp", icon: "💡", label: "Notions du RP", color: "text-primary" },
+];
 
 const Reglement = () => {
+  const [activeSection, setActiveSection] = useState("global");
+
+  const scrollToSection = (id: string) => {
+    setActiveSection(id);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="min-h-screen relative">
-      <BackgroundImage />
-      <Navbar />
-      <main className="relative z-10 pt-24 pb-16 px-4">
-        <div className="container mx-auto max-w-5xl">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Règlement</h1>
-            <p className="text-muted-foreground">
-              Dernière modification : 8:00, 10/03/2025
-            </p>
-          </div>
+    <div className="min-h-screen bg-background">
+      {/* Reglement Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo + Title */}
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <img src={logo} alt="Cityland WL" className="h-10 w-auto" />
+            <span className="text-foreground font-bold text-lg tracking-wide">
+              Cityland WL <span className="text-muted-foreground font-normal">Règlement</span>
+            </span>
+          </Link>
 
-          {/* Shortcuts */}
-          <div className="glass-card p-8 mb-8">
-            <h2 className="text-xl font-semibold mb-6">Raccourcis</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {Object.entries(shortcuts).map(([key, section]) => (
-                <div key={key}>
-                  <div className={`flex items-center gap-2 mb-3 ${section.color}`}>
-                    <section.icon className="w-5 h-5" />
-                    <span className="font-medium">{section.title}</span>
-                  </div>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    {section.items.map((item, i) => (
-                      <li key={i}>
-                        <a 
-                          href={`#${item.toLowerCase().replace(/[^a-z0-9àâäéèêëïîôùûüÿçœæ]+/g, '-').replace(/(^-|-$)/g, '')}`}
-                          className="hover:text-foreground cursor-pointer transition-colors"
-                        >
-                          {item}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          {/* Categories Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link
+              to="/"
+              className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <span>‹‹‹</span> Retour au Site
+            </Link>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => scrollToSection(cat.id)}
+                className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                  activeSection === cat.id
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <span>{cat.icon}</span>
+                {cat.label}
+                {cat.hasDropdown && <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            ))}
           </div>
+        </div>
+      </nav>
 
-          {/* Category Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <a href="#global" className="category-card">
-              <Globe className="feature-icon" />
-              <h3 className="text-xl font-semibold mb-2">Global</h3>
-              <p className="text-muted-foreground text-sm">Règles Discord, Général/HRP, Important, Véhicules</p>
-            </a>
-            <a href="#legal" className="category-card">
-              <Circle className="feature-icon" />
-              <h3 className="text-xl font-semibold mb-2">Légal</h3>
-              <p className="text-muted-foreground text-sm">SASP, SAMC, Government, Entreprises, Immobilier, MortRP</p>
-            </a>
-            <a href="#illegal" className="category-card">
-              <Ban className="feature-icon" />
-              <h3 className="text-xl font-semibold mb-2">Illégal</h3>
-              <p className="text-muted-foreground text-sm">Règles pour les activités illégales</p>
-            </a>
-            <a href="#notion-rp" className="category-card">
-              <MessageSquare className="feature-icon" />
-              <h3 className="text-xl font-semibold mb-2">Notion RP</h3>
-              <p className="text-muted-foreground text-sm">Concepts et termes du roleplay</p>
-            </a>
-          </div>
+      {/* Hero Banner */}
+      <section className="relative h-[70vh] flex flex-col items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={heroBg}
+            alt=""
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-background/40" />
+        </div>
 
-          {/* Préambule */}
+        {/* Content */}
+        <div className="relative z-10 text-center">
+          <p className="text-2xl md:text-4xl font-normal text-foreground mb-2 italic">
+            Rejoignez l'aventure
+          </p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground mb-10 tracking-tight">
+            Devenez qui vous voulez !
+          </h1>
+          <a
+            href="https://discord.gg/EEwZz2bbxU"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-card/70 hover:bg-primary text-foreground px-12 py-4 text-base font-bold tracking-[0.1em] transition-all duration-300"
+          >
+            Nous Rejoindre
+          </a>
+        </div>
+      </section>
+
+      {/* Rules Content */}
+      <main className="relative z-10 py-16 px-4">
+        <BackgroundImage />
+        <div className="container mx-auto max-w-5xl relative z-10">
+
+          {/* PRÉAMBULE */}
           <section className="reglement-section">
             <h2>PRÉAMBULE</h2>
             <p>
