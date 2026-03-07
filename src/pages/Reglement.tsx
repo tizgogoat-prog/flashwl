@@ -1,14 +1,26 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import Footer from "@/components/Footer";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
 
 const categories = [
-  { id: "global", icon: "🌐", label: "Global" },
+  { id: "global", icon: "🌐", label: "Global", hasDropdown: true },
   { id: "legal", icon: "⚖️", label: "Légal", hasDropdown: true },
   { id: "illegal", icon: "💀", label: "Illégal", hasDropdown: true },
   { id: "notion-rp", icon: "💡", label: "Notions du RP" },
+  { id: "faq", icon: "🚩", label: "FAQ" },
+];
+
+const faqItems = [
+  "Comment rejoindre le serveur CityLand WL ?",
+  "Comment diffuser mon stream sur le site CityLand WL ?",
+  "Est-il possible d'occuper deux emplois simultanément ?",
+  "Quelle est la durée de location pour un véhicule dans le cadre d'un emploi intérimaire ?",
+  "Il est interdit de s'engager dans des activités illégales en tant qu'agent immobilier.",
+  "Si je quitte un groupe PF (Petite Frappe), est-il nécessaire de wipe mon personnage ?",
+  "Existe-t-il des emplois accessibles au public (intérimaires) sur le serveur ?",
+  "Est-il permis d'effectuer des cambriolages ou des braquages en utilisant une moto ?",
 ];
 
 const Reglement = () => {
@@ -21,29 +33,29 @@ const Reglement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Reglement Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/20">
+        <div className="container mx-auto px-6 h-14 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <img src={logo} alt="Cityland WL" className="h-10 w-auto" />
-            <span className="text-foreground font-bold text-lg tracking-wide">
-              Cityland WL <span className="text-muted-foreground font-normal">Règlement</span>
+            <img src={logo} alt="CityLand WL" className="h-8 w-auto" />
+            <span className="text-foreground font-semibold text-base">
+              CityLand WL <span className="text-muted-foreground font-normal">Règlement</span>
             </span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             <Link
               to="/"
-              className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              <span>‹‹‹</span> Retour au Site
+              ‹‹ Retour au Site
             </Link>
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => scrollToSection(cat.id)}
-                className={`flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 text-sm transition-colors ${
                   activeSection === cat.id
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -51,70 +63,46 @@ const Reglement = () => {
               >
                 <span>{cat.icon}</span>
                 {cat.label}
-                {cat.hasDropdown && <ChevronDown className="w-3.5 h-3.5" />}
+                {cat.hasDropdown && <ChevronDown className="w-3 h-3" />}
               </button>
             ))}
+            <button className="text-muted-foreground hover:text-foreground transition-colors">
+              <Search className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Banner with Video Background */}
-      <section className="relative h-[70vh] flex flex-col items-center justify-center overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/videos/bg-video.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-background/50" />
-        </div>
-
-        {/* Content */}
+      {/* Hero */}
+      <section className="relative h-[50vh] flex flex-col items-center justify-center bg-background">
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
         <div className="relative z-10 text-center">
-          <p className="text-2xl md:text-4xl font-normal text-foreground mb-2 italic">
+          <p className="text-xl md:text-3xl font-normal text-foreground/90 mb-2 italic">
             Rejoignez l'aventure
           </p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-foreground mb-10 tracking-tight">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-foreground mb-8 tracking-tight">
             Devenez qui vous voulez !
           </h1>
           <a
             href="https://discord.gg/EEwZz2bbxU"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-card/70 hover:bg-primary text-foreground px-12 py-4 text-base font-bold tracking-[0.1em] transition-all duration-300"
+            className="inline-block bg-card/60 hover:bg-primary text-foreground px-10 py-3.5 text-sm font-bold tracking-[0.1em] transition-all duration-300 border-b-2 border-foreground/20"
           >
             Nous Rejoindre
           </a>
         </div>
       </section>
 
-      {/* Rules Content */}
-      <main className="relative z-10 py-16 px-4">
-        {/* Background video for content area */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover opacity-20"
-          >
-            <source src="/videos/bg-video.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background pointer-events-none" />
-        </div>
+      {/* Content */}
+      <main className="py-16 px-4">
+        <div className="container mx-auto max-w-5xl">
 
-        <div className="container mx-auto max-w-5xl relative z-10">
           {/* PRÉAMBULE */}
           <section className="reglement-section">
             <h2>PRÉAMBULE</h2>
             <p>
-              Le présent règlement est destiné à organiser la vie et les conditions d'utilisation du serveur Cityland WL. 
+              Le présent règlement est destiné à organiser la vie et les conditions d'utilisation du serveur CityLand WL. 
               Il est susceptible de subir des modifications à tout moment, elles seront directement prises en compte par vous 
               dès votre première connexion ou prochaine. Le non-respect de ce présent règlement se verra sanctionnable.
             </p>
@@ -273,6 +261,19 @@ const Reglement = () => {
               <li>Vous pouvez contester une sanction via Discord, en fournissant des preuves.</li>
             </ul>
           </section>
+
+          {/* FAQ */}
+          <section className="reglement-section" id="faq">
+            <h2>🚩 Foire aux questions (FAQ)</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0 mt-6">
+              {faqItems.map((question, i) => (
+                <div key={i} className="py-5 border-b border-border/30">
+                  <p className="text-foreground font-medium text-sm leading-relaxed pl-0">{question}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
         </div>
       </main>
       <Footer />
