@@ -2,11 +2,12 @@ import Navbar from "@/components/Navbar";
 import BackgroundImage from "@/components/BackgroundImage";
 import Footer from "@/components/Footer";
 import { Twitch, Youtube, Twitter, Users } from "lucide-react";
+import wecheuAvatar from "@/assets/wecheu-avatar.png";
 
 const streamers = [
   {
     name: "Wecheu",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Wecheu",
+    avatar: wecheuAvatar,
     platform: "Twitch",
     followers: "15.2K",
     description: "Streamer officiel Cityland WL - RP quotidien",
@@ -21,42 +22,6 @@ const streamers = [
     description: "Membre du SASP - Roleplay policier",
     isLive: false,
     links: ["twitch", "youtube"],
-  },
-  {
-    name: "CityLifeRP",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=CityLifeRP",
-    platform: "YouTube",
-    followers: "22.1K",
-    description: "Vidéos RP et moments épiques",
-    isLive: false,
-    links: ["youtube", "twitter"],
-  },
-  {
-    name: "GangsterVibes",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=GangsterVibes",
-    platform: "Twitch",
-    followers: "5.8K",
-    description: "Chef de gang - RP criminel intense",
-    isLive: true,
-    links: ["twitch"],
-  },
-  {
-    name: "EMSAngel",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=EMSAngel",
-    platform: "Twitch",
-    followers: "3.2K",
-    description: "Médecin au SAMC - Sauver des vies en RP",
-    isLive: false,
-    links: ["twitch", "twitter"],
-  },
-  {
-    name: "MayorOfCity",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MayorOfCity",
-    platform: "YouTube",
-    followers: "12.4K",
-    description: "Gouverneur - Politics RP",
-    isLive: false,
-    links: ["youtube"],
   },
 ];
 
