@@ -153,11 +153,15 @@ const Reglement = () => {
       {/* Hero with background image */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={reglementBg}
-            alt=""
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/videos/bg-video.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-background/40" />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
         </div>
