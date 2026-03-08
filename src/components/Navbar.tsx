@@ -28,15 +28,14 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className="relative pb-2 text-sm font-semibold tracking-[0.2em] uppercase transition-colors duration-200"
+                className="group relative pb-2 text-sm font-semibold tracking-[0.2em] uppercase transition-colors duration-200"
               >
-                <span className={isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"}>
+                <span className={isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}>
                   {link.name}
                 </span>
-                {/* Red underline indicator like FlashFA */}
                 <span
                   className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-primary transition-all duration-300 ${
-                    isActive ? "w-8" : "w-0"
+                    isActive ? "w-8" : "w-0 group-hover:w-8"
                   }`}
                 />
               </Link>
