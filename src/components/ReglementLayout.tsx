@@ -58,9 +58,10 @@ interface ReglementLayoutProps {
   children: React.ReactNode;
   title: string;
   icon?: string;
+  backgroundImage?: string;
 }
 
-const ReglementLayout = ({ children, title, icon }: ReglementLayoutProps) => {
+const ReglementLayout = ({ children, title, icon, backgroundImage }: ReglementLayoutProps) => {
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
