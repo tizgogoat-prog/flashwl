@@ -58,9 +58,10 @@ interface ReglementLayoutProps {
   children: React.ReactNode;
   title: string;
   icon?: string;
+  backgroundImage?: string;
 }
 
-const ReglementLayout = ({ children, title, icon }: ReglementLayoutProps) => {
+const ReglementLayout = ({ children, title, icon, backgroundImage }: ReglementLayoutProps) => {
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -157,7 +158,7 @@ const ReglementLayout = ({ children, title, icon }: ReglementLayoutProps) => {
       {/* Hero with image - shorter for sub-pages */}
       <section className="relative h-[40vh] flex flex-col items-center justify-end pb-12 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={reglementHero} alt="" className="w-full h-full object-cover" />
+          <img src={backgroundImage || reglementHero} alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-background/50" />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
         </div>
