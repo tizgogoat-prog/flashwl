@@ -154,7 +154,7 @@ const Reglement = () => {
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={heroBg}
+            src={reglementBg}
             alt=""
             className="w-full h-full object-cover"
           />
