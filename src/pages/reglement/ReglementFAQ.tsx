@@ -3,10 +3,6 @@ import ReglementLayout from "@/components/ReglementLayout";
 
 const faqItems = [
   {
-    question: "Si j'annule mon abonnement avant son expiration, est-ce que je conserve les avantages VIP ?",
-    answer: "Oui, les avantages VIP restent valables pour toute la durée du mois en cours, même si l'abonnement est annulé avant son échéance.",
-  },
-  {
     question: "Comment puis-je diffuser mon stream sur le site CityLand WL ?",
     answer: "L'affichage des streams sur le site CityLand WL est déterminé uniquement par les administrateurs. Des procédures de candidature seront bientôt mises en place pour ceux qui souhaitent être considérés.",
   },
