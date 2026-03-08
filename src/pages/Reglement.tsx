@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
-import heroBg from "@/assets/hero-bg.jpg";
+import reglementBg from "@/assets/reglement-bg.png";
 import Footer from "@/components/Footer";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -154,7 +154,7 @@ const Reglement = () => {
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={heroBg}
+            src={reglementBg}
             alt=""
             className="w-full h-full object-cover"
           />
