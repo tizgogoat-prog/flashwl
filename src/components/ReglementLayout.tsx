@@ -164,6 +164,7 @@ const ReglementLayout = ({ children, title, icon, backgroundImage }: ReglementLa
         </div>
         <div className="relative z-10 text-center">
           <h1 className="text-3xl md:text-5xl font-black text-foreground tracking-tight italic">
+            {icon && <span className="mr-3 not-italic">{icon}</span>}
             {title}
           </h1>
         </div>
