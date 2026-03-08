@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import Footer from "@/components/Footer";
-import Footer from "@/components/Footer";
+import { ChevronDown } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
