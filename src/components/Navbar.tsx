@@ -35,7 +35,7 @@ const Navbar = () => {
                 </span>
                 {/* Red underline indicator like FlashFA */}
                 <span
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-red-500 transition-all duration-300 ${
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[3px] bg-primary transition-all duration-300 ${
                     isActive ? "w-8" : "w-0"
                   }`}
                 />
