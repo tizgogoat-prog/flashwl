@@ -62,6 +62,69 @@ export type Database = {
         }
         Relationships: []
       }
+      whitelist_applications: {
+        Row: {
+          admin_message: string | null
+          age: string
+          created_at: string
+          discord_message_id: string | null
+          disponibilites: string
+          experience_serveurs: string
+          experience_temps: string
+          id: string
+          id_discord: string
+          motivation: string
+          pays: string
+          perso_age: string
+          perso_histoire: string
+          perso_nom: string
+          prenom: string
+          pseudo_discord: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_message?: string | null
+          age: string
+          created_at?: string
+          discord_message_id?: string | null
+          disponibilites: string
+          experience_serveurs: string
+          experience_temps: string
+          id?: string
+          id_discord: string
+          motivation: string
+          pays: string
+          perso_age: string
+          perso_histoire: string
+          perso_nom: string
+          prenom: string
+          pseudo_discord: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_message?: string | null
+          age?: string
+          created_at?: string
+          discord_message_id?: string | null
+          disponibilites?: string
+          experience_serveurs?: string
+          experience_temps?: string
+          id?: string
+          id_discord?: string
+          motivation?: string
+          pays?: string
+          perso_age?: string
+          perso_histoire?: string
+          perso_nom?: string
+          prenom?: string
+          pseudo_discord?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

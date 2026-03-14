@@ -6,10 +6,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
+const DISCORD_API = 'https://discord.com/api/v10';
+
 // Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
-const RATE_LIMIT_MAX = 3; // max 3 submissions per hour per IP
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const RATE_LIMIT_MAX = 3;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -22,7 +24,6 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT_MAX;
 }
 
-// Validation helpers
 function validateString(val: unknown, minLen: number, maxLen: number): string | null {
   if (typeof val !== 'string') return null;
   const trimmed = val.trim();
@@ -52,7 +53,6 @@ serve(async (req) => {
   }
 
   try {
-    // Rate limiting
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     if (isRateLimited(ip)) {
       return new Response(JSON.stringify({ success: false, error: 'Trop de soumissions. Réessaie plus tard.' }), {
@@ -61,10 +61,15 @@ serve(async (req) => {
       });
     }
 
-    const DISCORD_WEBHOOK_URL = Deno.env.get('DISCORD_WEBHOOK_URL');
-    if (!DISCORD_WEBHOOK_URL) {
-      throw new Error('DISCORD_WEBHOOK_URL is not configured');
+    const DISCORD_BOT_TOKEN = Deno.env.get('DISCORD_BOT_TOKEN');
+    const DISCORD_CHANNEL_ID = Deno.env.get('DISCORD_CHANNEL_ID');
+    if (!DISCORD_BOT_TOKEN || !DISCORD_CHANNEL_ID) {
+      throw new Error('Discord bot configuration is missing');
     }
+
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     const body = await req.json();
 
@@ -90,6 +95,34 @@ serve(async (req) => {
       });
     }
 
+    // Save to database
+    const { data: appData, error: dbError } = await supabase
+      .from('whitelist_applications')
+      .insert({
+        prenom,
+        age,
+        pays,
+        disponibilites,
+        pseudo_discord: pseudoDiscord,
+        id_discord: idDiscord,
+        experience_temps: experienceTemps,
+        experience_serveurs: experienceServeurs,
+        perso_nom: persoNom,
+        perso_age: persoAge,
+        perso_histoire: persoHistoire,
+        motivation,
+        status: 'pending',
+      })
+      .select('id')
+      .single();
+
+    if (dbError) {
+      console.error('DB insert error:', dbError);
+      throw new Error('Failed to save application');
+    }
+
+    const applicationId = appData.id;
+
     const embed = {
       title: "📋 Nouvelle Candidature Whitelist",
       color: 0x7C3AED,
@@ -107,20 +140,69 @@ serve(async (req) => {
         { name: "❤️ Motivation", value: motivation.substring(0, 1024), inline: false },
       ],
       timestamp: new Date().toISOString(),
-      footer: { text: "Cityland WL — Système de Whitelist" },
+      footer: { text: `Cityland WL — ID: ${applicationId}` },
     };
 
-    const discordRes = await fetch(DISCORD_WEBHOOK_URL, {
+    // Send message with buttons via Bot API
+    const discordRes = await fetch(`${DISCORD_API}/channels/${DISCORD_CHANNEL_ID}/messages`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ embeds: [embed] }),
+      headers: {
+        'Authorization': `Bot ${DISCORD_BOT_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        embeds: [embed],
+        components: [
+          {
+            type: 1, // Action Row
+            components: [
+              {
+                type: 2, // Button
+                style: 4, // Danger (red)
+                label: "Refuser",
+                emoji: { name: "❌" },
+                custom_id: `wl_reject_${applicationId}`,
+              },
+              {
+                type: 2,
+                style: 3, // Success (green)
+                label: "Accepter",
+                emoji: { name: "✅" },
+                custom_id: `wl_accept_${applicationId}`,
+              },
+              {
+                type: 2,
+                style: 1, // Primary (blue)
+                label: "Attente (Vocal WL)",
+                emoji: { name: "⏳" },
+                custom_id: `wl_wait_${applicationId}`,
+              },
+              {
+                type: 2,
+                style: 2, // Secondary (grey)
+                label: "Message personnalisé",
+                emoji: { name: "💬" },
+                custom_id: `wl_message_${applicationId}`,
+              },
+            ],
+          },
+        ],
+      }),
     });
 
     if (!discordRes.ok) {
       const errText = await discordRes.text();
-      console.error(`Discord webhook failed [${discordRes.status}]: ${errText}`);
-      throw new Error('Failed to send application');
+      console.error(`Discord Bot API failed [${discordRes.status}]: ${errText}`);
+      throw new Error('Failed to send application to Discord');
     }
+
+    const discordMessage = await discordRes.json();
+
+    // Save the Discord message ID for later updates
+    await supabase
+      .from('whitelist_applications')
+      .update({ discord_message_id: discordMessage.id })
+      .eq('id', applicationId);
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
