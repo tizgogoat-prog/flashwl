@@ -33,6 +33,7 @@ serve(async (req) => {
   const PUBLIC_KEY = Deno.env.get('DISCORD_APPLICATION_PUBLIC_KEY');
   const BOT_TOKEN = Deno.env.get('DISCORD_BOT_TOKEN');
   const CHANNEL_ID = Deno.env.get('DISCORD_CHANNEL_ID');
+  const CITIZEN_ROLE_ID = Deno.env.get('DISCORD_CITIZEN_ROLE_ID');
 
   if (!PUBLIC_KEY || !BOT_TOKEN || !CHANNEL_ID) {
     return new Response('Server misconfigured', { status: 500 });
@@ -151,6 +152,31 @@ serve(async (req) => {
       .from('whitelist_applications')
       .update({ status: newStatus, updated_at: new Date().toISOString() })
       .eq('id', applicationId);
+
+    // If accepted, assign the Citoyen role on Discord
+    if (action === 'accept' && CITIZEN_ROLE_ID && app.id_discord) {
+      try {
+        // Get the guild ID from the interaction
+        const guildId = interaction.guild_id;
+        if (guildId) {
+          const roleRes = await fetch(
+            `${DISCORD_API}/guilds/${guildId}/members/${app.id_discord}/roles/${CITIZEN_ROLE_ID}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          if (!roleRes.ok) {
+            console.error('Failed to assign role:', await roleRes.text());
+          }
+        }
+      } catch (roleErr) {
+        console.error('Error assigning citizen role:', roleErr);
+      }
+    }
 
     // Update the original message embed with new status
     const originalEmbed = interaction.message.embeds[0];
