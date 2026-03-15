@@ -33,6 +33,7 @@ serve(async (req) => {
   const PUBLIC_KEY = Deno.env.get('DISCORD_APPLICATION_PUBLIC_KEY');
   const BOT_TOKEN = Deno.env.get('DISCORD_BOT_TOKEN');
   const CHANNEL_ID = Deno.env.get('DISCORD_CHANNEL_ID');
+  const CITIZEN_ROLE_ID = Deno.env.get('DISCORD_CITIZEN_ROLE_ID');
 
   if (!PUBLIC_KEY || !BOT_TOKEN || !CHANNEL_ID) {
     return new Response('Server misconfigured', { status: 500 });
