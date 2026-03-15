@@ -153,6 +153,31 @@ serve(async (req) => {
       .update({ status: newStatus, updated_at: new Date().toISOString() })
       .eq('id', applicationId);
 
+    // If accepted, assign the Citoyen role on Discord
+    if (action === 'accept' && CITIZEN_ROLE_ID && app.id_discord) {
+      try {
+        // Get the guild ID from the interaction
+        const guildId = interaction.guild_id;
+        if (guildId) {
+          const roleRes = await fetch(
+            `${DISCORD_API}/guilds/${guildId}/members/${app.id_discord}/roles/${CITIZEN_ROLE_ID}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bot ${BOT_TOKEN}`,
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          if (!roleRes.ok) {
+            console.error('Failed to assign role:', await roleRes.text());
+          }
+        }
+      } catch (roleErr) {
+        console.error('Error assigning citizen role:', roleErr);
+      }
+    }
+
     // Update the original message embed with new status
     const originalEmbed = interaction.message.embeds[0];
     const updatedEmbed = {
