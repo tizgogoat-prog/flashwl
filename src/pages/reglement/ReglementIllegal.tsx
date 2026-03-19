@@ -20,7 +20,7 @@ const ReglementIllegal = () => (
 
     {/* Discord Rules */}
     <h3>🖥️ Discord</h3>
-    <p>Avant de rejoindre le Discord illégal de CityLand WL, voici la liste des règles à respecter que vous devrez impérativement prendre en compte sous peine de sanctions.</p>
+    <p>Avant de rejoindre le Discord illégal de FlashWL, voici la liste des règles à respecter que vous devrez impérativement prendre en compte sous peine de sanctions.</p>
     
     <p className="font-semibold mt-4">⛔ Interdictions :</p>
     <ul>
