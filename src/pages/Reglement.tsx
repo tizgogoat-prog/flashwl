@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.png";
-import reglementHero from "@/assets/reglement-hero.png";
+import reglementHero from "@/assets/reglement-banner.png";
 import Footer from "@/components/Footer";
 
 interface SubItem {
