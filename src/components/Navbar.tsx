@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center shrink-0">
-          <img src={logo} alt="Cityland WL Logo" className="h-10 w-auto" />
+          <img src={logo} alt="FlashWL Logo" className="h-10 w-auto" />
         </Link>
 
         {/* Nav Links - Center */}

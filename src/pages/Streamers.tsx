@@ -10,7 +10,7 @@ const streamers = [
     avatar: wecheuAvatar,
     platform: "Twitch",
     followers: "15.2K",
-    description: "Streamer officiel Cityland WL - RP quotidien",
+    description: "Streamer officiel FlashWL - RP quotidien",
     isLive: true,
     links: ["twitch", "twitter"],
   },
@@ -38,7 +38,7 @@ const Streamers = () => {
               Nos Streamers Partenaires
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Découvrez les créateurs de contenu qui font vivre Cityland WL au quotidien. 
+              Découvrez les créateurs de contenu qui font vivre FlashWL au quotidien. 
               Suivez-les pour ne rien rater de l'action !
             </p>
           </div>
@@ -109,7 +109,7 @@ const Streamers = () => {
               Devenir Streamer Partenaire
             </h2>
             <p className="text-muted-foreground mb-6">
-              Tu streames régulièrement sur Cityland WL ? Rejoins notre programme partenaire !
+              Tu streames régulièrement sur FlashWL ? Rejoins notre programme partenaire !
             </p>
             <a
               href="https://discord.gg/gt4xYVUDXt"

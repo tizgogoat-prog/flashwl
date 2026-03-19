@@ -3,8 +3,8 @@ import ReglementLayout from "@/components/ReglementLayout";
 
 const faqItems = [
   {
-    question: "Comment puis-je diffuser mon stream sur le site CityLand WL ?",
-    answer: "L'affichage des streams sur le site CityLand WL est déterminé uniquement par les administrateurs. Des procédures de candidature seront bientôt mises en place pour ceux qui souhaitent être considérés.",
+    question: "Comment puis-je diffuser mon stream sur le site FlashWL ?",
+    answer: "L'affichage des streams sur le site FlashWL est déterminé uniquement par les administrateurs. Des procédures de candidature seront bientôt mises en place pour ceux qui souhaitent être considérés.",
   },
   {
     question: "Est-il possible d'occuper deux emplois simultanément ?",

@@ -53,7 +53,7 @@ const MDT = () => {
 
       <div className="relative z-10 glass-card p-8 w-full max-w-md mx-4">
         <div className="flex flex-col items-center mb-8">
-          <img src={logo} alt="Cityland WL" className="h-16 w-auto mb-4" />
+          <img src={logo} alt="FlashWL" className="h-16 w-auto mb-4" />
           <h1 className="text-2xl font-semibold">Connexion MDT</h1>
         </div>
 

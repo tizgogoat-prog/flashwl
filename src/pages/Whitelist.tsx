@@ -292,7 +292,7 @@ const Whitelist = () => {
       icon: Heart,
       title: "Motivations",
       fields: [
-        { key: "motivation" as keyof FormData, label: "Pourquoi veux-tu rejoindre Cityland WL ?", placeholder: "Explique-nous ta motivation...", type: "textarea" },
+        { key: "motivation" as keyof FormData, label: "Pourquoi veux-tu rejoindre FlashWL ?", placeholder: "Explique-nous ta motivation...", type: "textarea" },
       ],
     },
   ];
@@ -313,7 +313,7 @@ const Whitelist = () => {
               Formulaire de <span className="gradient-text">Whitelist</span>
             </h1>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Remplis ce formulaire avec soin pour rejoindre l'aventure Cityland WL. Chaque candidature est examinée par notre équipe.
+              Remplis ce formulaire avec soin pour rejoindre l'aventure FlashWL. Chaque candidature est examinée par notre équipe.
             </p>
           </div>
 
@@ -430,7 +430,7 @@ const Whitelist = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    règlement de Cityland WL
+                    règlement de FlashWL
                   </a>{" "}
                   <span className="text-destructive">*</span>
                 </span>
