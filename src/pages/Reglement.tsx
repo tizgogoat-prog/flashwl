@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.png";
-import reglementHero from "@/assets/reglement-hero.png";
+import reglementHero from "@/assets/reglement-banner.png";
 import Footer from "@/components/Footer";
 
 interface SubItem {
@@ -78,9 +78,9 @@ const Reglement = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 h-12 flex items-center justify-between" ref={dropdownRef}>
           <Link to="/reglement" className="flex items-center gap-2.5 shrink-0">
-            <img src={logo} alt="CityLand WL" className="h-7 w-auto" />
+            <img src={logo} alt="FlashWL" className="h-7 w-auto" />
             <span className="text-foreground font-semibold text-sm">
-              CityLand WL{" "}
+              FlashWL{" "}
               <span className="text-muted-foreground font-normal">Règlement</span>
             </span>
           </Link>
