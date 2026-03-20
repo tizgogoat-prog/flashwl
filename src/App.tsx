@@ -9,6 +9,7 @@ import Streamers from "./pages/Streamers";
 import Whitelist from "./pages/Whitelist";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import MDTDashboard from "./pages/MDTDashboard";
 import NotFound from "./pages/NotFound";
 import ReglementDiscord from "./pages/reglement/ReglementDiscord";
 import ReglementHRP from "./pages/reglement/ReglementHRP";
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/whitelist" element={<Whitelist />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/mdt/dashboard" element={<MDTDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
