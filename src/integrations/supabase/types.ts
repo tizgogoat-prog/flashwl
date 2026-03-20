@@ -14,6 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
+      citizen_records: {
+        Row: {
+          citizen_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          record_type: string
+          title: string
+        }
+        Insert: {
+          citizen_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          record_type: string
+          title: string
+        }
+        Update: {
+          citizen_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          record_type?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "citizen_records_citizen_id_fkey"
+            columns: ["citizen_id"]
+            isOneToOne: false
+            referencedRelation: "citizens"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      citizens: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          date_of_birth: string | null
+          drivers_license: string | null
+          email: string | null
+          ethnicity: string | null
+          first_name: string
+          hair_color: string | null
+          height: string | null
+          id: string
+          is_wanted: boolean | null
+          job: string | null
+          last_name: string
+          phone: string | null
+          photo_url: string | null
+          ppa_civil: boolean | null
+          updated_at: string
+          wanted_by: string | null
+          wanted_reason: string | null
+          weight: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          drivers_license?: string | null
+          email?: string | null
+          ethnicity?: string | null
+          first_name: string
+          hair_color?: string | null
+          height?: string | null
+          id?: string
+          is_wanted?: boolean | null
+          job?: string | null
+          last_name: string
+          phone?: string | null
+          photo_url?: string | null
+          ppa_civil?: boolean | null
+          updated_at?: string
+          wanted_by?: string | null
+          wanted_reason?: string | null
+          weight?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          drivers_license?: string | null
+          email?: string | null
+          ethnicity?: string | null
+          first_name?: string
+          hair_color?: string | null
+          height?: string | null
+          id?: string
+          is_wanted?: boolean | null
+          job?: string | null
+          last_name?: string
+          phone?: string | null
+          photo_url?: string | null
+          ppa_civil?: boolean | null
+          updated_at?: string
+          wanted_by?: string | null
+          wanted_reason?: string | null
+          weight?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
