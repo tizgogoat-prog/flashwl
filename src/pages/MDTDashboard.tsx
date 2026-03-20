@@ -7,6 +7,7 @@ import MDTSidebar from "@/components/mdt/MDTSidebar";
 import MDTCitizens from "@/components/mdt/MDTCitizens";
 import MDTHome from "@/components/mdt/MDTHome";
 import MDTRecords from "@/components/mdt/MDTRecords";
+import MDTSettings from "@/components/mdt/MDTSettings";
 
 export type MDTView =
   | "accueil"
@@ -17,7 +18,8 @@ export type MDTView =
   | "armes"
   | "delits"
   | "bracelets"
-  | "vehicules";
+  | "vehicules"
+  | "parametres";
 
 const MDTDashboard = () => {
   const navigate = useNavigate();
