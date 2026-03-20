@@ -49,6 +49,7 @@ const App = () => (
           <Route path="/whitelist" element={<Whitelist />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/mdt/dashboard" element={<MDTDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
