@@ -99,6 +99,11 @@ const MDTSidebar = ({ currentView, onViewChange, onLogout, userRole }: Props) =>
             {sidebarItem("Véhicules en infraction", "vehicules", <Car className="w-4 h-4" />)}
           </div>
         )}
+
+        {/* Paramètres */}
+        <div className="mt-4">
+          {sidebarItem("Paramètres", "parametres", <Settings className="w-4 h-4" />)}
+        </div>
       </nav>
 
       {/* Footer */}

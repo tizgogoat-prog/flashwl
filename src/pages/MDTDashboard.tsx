@@ -84,6 +84,8 @@ const MDTDashboard = () => {
     switch (currentView) {
       case "citoyens":
         return <MDTCitizens user={user} />;
+      case "parametres":
+        return <MDTSettings user={user} />;
       case "rapports":
       case "plaintes":
       case "armes":
