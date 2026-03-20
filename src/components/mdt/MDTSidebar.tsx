@@ -12,6 +12,7 @@ import {
   Car,
   LogOut,
   Link2,
+  Settings,
 } from "lucide-react";
 import type { MDTView } from "@/pages/MDTDashboard";
 import logo from "@/assets/logo.png";
