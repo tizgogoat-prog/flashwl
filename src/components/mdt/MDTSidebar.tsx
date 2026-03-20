@@ -12,6 +12,7 @@ import {
   Car,
   LogOut,
   Link2,
+  Settings,
 } from "lucide-react";
 import type { MDTView } from "@/pages/MDTDashboard";
 import logo from "@/assets/logo.png";
@@ -98,6 +99,11 @@ const MDTSidebar = ({ currentView, onViewChange, onLogout, userRole }: Props) =>
             {sidebarItem("Véhicules en infraction", "vehicules", <Car className="w-4 h-4" />)}
           </div>
         )}
+
+        {/* Paramètres */}
+        <div className="mt-4">
+          {sidebarItem("Paramètres", "parametres", <Settings className="w-4 h-4" />)}
+        </div>
       </nav>
 
       {/* Footer */}
