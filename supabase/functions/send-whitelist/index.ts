@@ -124,7 +124,7 @@ serve(async (req) => {
     const applicationId = appData.id;
 
     const embed = {
-      title: "📋 Nouvelle Candidature Whitelist",
+      title: "📋 Nouvelle Candidature FlashWL",
       color: 0x7C3AED,
       fields: [
         { name: "👤 Prénom", value: prenom, inline: true },
@@ -140,7 +140,7 @@ serve(async (req) => {
         { name: "❤️ Motivation", value: motivation.substring(0, 1024), inline: false },
       ],
       timestamp: new Date().toISOString(),
-      footer: { text: `Cityland WL — ID: ${applicationId}` },
+      footer: { text: `FlashWL — ID: ${applicationId}` },
     };
 
     // Send message with buttons via Bot API
