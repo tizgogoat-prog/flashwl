@@ -224,14 +224,14 @@ serve(async (req) => {
           },
           body: JSON.stringify({
             embeds: [{
-              title: `${statusEmoji} Candidature Cityland WL`,
+              title: `${statusEmoji} Candidature FlashWL`,
               description: action === 'accept'
-                ? `Félicitations **${app.prenom}** ! Ta candidature a été **acceptée** ! 🎉\nBienvenue sur Cityland WL !`
+                ? `Félicitations **${app.prenom}** ! Ta candidature a été **acceptée** ! 🎉\nBienvenue sur FlashWL !`
                 : action === 'reject'
                 ? `Bonjour **${app.prenom}**, ta candidature a été **refusée**.\nN'hésite pas à retenter plus tard.`
                 : `Bonjour **${app.prenom}**, ta candidature est **en attente**.\nTu seras convoqué(e) pour un vocal WL prochainement.`,
               color: embedColor,
-              footer: { text: 'Cityland WL' },
+              footer: { text: 'FlashWL' },
               timestamp: new Date().toISOString(),
             }],
           }),
