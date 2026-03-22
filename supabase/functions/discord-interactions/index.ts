@@ -302,10 +302,10 @@ serve(async (req) => {
             },
             body: JSON.stringify({
               embeds: [{
-                title: "💬 Message de l'équipe Cityland WL",
+                title: "💬 Message de l'équipe FlashWL",
                 description: customMessage,
                 color: 0x7C3AED,
-                footer: { text: `De: ${adminUser} — Cityland WL` },
+                footer: { text: `De: ${adminUser} — FlashWL` },
                 timestamp: new Date().toISOString(),
               }],
             }),
