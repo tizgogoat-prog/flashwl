@@ -124,7 +124,7 @@ serve(async (req) => {
     const applicationId = appData.id;
 
     const embed = {
-      title: "📋 Nouvelle Candidature Whitelist",
+      title: "📋 Nouvelle Candidature FlashWL",
       color: 0x7C3AED,
       fields: [
         { name: "👤 Prénom", value: prenom, inline: true },
