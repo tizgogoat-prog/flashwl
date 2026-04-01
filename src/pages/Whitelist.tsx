@@ -100,6 +100,14 @@ const Whitelist = () => {
   const [hasCitoyenRole, setHasCitoyenRole] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
+  const [discordClientId, setDiscordClientId] = useState<string | null>(null);
+
+  // Fetch Discord client ID
+  useEffect(() => {
+    supabase.functions.invoke("discord-oauth", { method: "GET" } as any).then(({ data }) => {
+      if (data?.client_id) setDiscordClientId(data.client_id);
+    });
+  }, []);
 
   // Handle Discord OAuth callback
   useEffect(() => {
