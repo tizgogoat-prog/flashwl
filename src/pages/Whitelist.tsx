@@ -76,9 +76,9 @@ const getRedirectUri = () => {
   return `${window.location.origin}/whitelist`;
 };
 
-const getDiscordOAuthUrl = () => {
+const getDiscordOAuthUrl = (clientId: string) => {
   const params = new URLSearchParams({
-    client_id: DISCORD_CLIENT_ID,
+    client_id: clientId,
     redirect_uri: getRedirectUri(),
     response_type: "code",
     scope: "identify",
