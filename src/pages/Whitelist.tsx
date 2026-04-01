@@ -6,8 +6,7 @@ import Footer from "@/components/Footer";
 import { ClipboardList, User, MessageSquare, Gamepad2, BookOpen, Heart, CheckCircle2, Send, Loader2, XCircle, Clock, LogIn } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-// Discord OAuth config
-const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID || "";
+// Discord OAuth - client ID fetched from edge function
 
 interface DiscordUser {
   id: string;
