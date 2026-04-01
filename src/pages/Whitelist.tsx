@@ -104,9 +104,13 @@ const Whitelist = () => {
 
   // Fetch Discord client ID
   useEffect(() => {
-    supabase.functions.invoke("discord-oauth", { method: "GET" } as any).then(({ data }) => {
-      if (data?.client_id) setDiscordClientId(data.client_id);
-    });
+    const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+    fetch(`https://${projectId}.supabase.co/functions/v1/discord-oauth`, {
+      headers: { 'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+    })
+      .then(res => res.json())
+      .then(data => { if (data?.client_id) setDiscordClientId(data.client_id); })
+      .catch(console.error);
   }, []);
 
   // Handle Discord OAuth callback
