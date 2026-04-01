@@ -12,6 +12,24 @@ serve(async (req) => {
   }
 
   try {
+    const url = new URL(req.url);
+    
+    // GET = return client ID for OAuth URL
+    if (req.method === 'GET') {
+      const CLIENT_ID = Deno.env.get('DISCORD_CLIENT_ID');
+      if (!CLIENT_ID) {
+        return new Response(JSON.stringify({ error: 'Discord OAuth not configured' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      return new Response(JSON.stringify({ client_id: CLIENT_ID }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // POST = exchange code for user info
     const { code, redirect_uri } = await req.json();
 
     if (!code || !redirect_uri) {
@@ -82,10 +100,7 @@ serve(async (req) => {
     const DISCORD_CITIZEN_ROLE_ID = Deno.env.get('DISCORD_CITIZEN_ROLE_ID');
     
     if (DISCORD_BOT_TOKEN) {
-      // We need the guild ID - extract from channel or use env
-      // Try to get guild member info using the bot
       try {
-        // Get the guild ID from the channel
         const DISCORD_CHANNEL_ID = Deno.env.get('DISCORD_CHANNEL_ID');
         if (DISCORD_CHANNEL_ID) {
           const channelRes = await fetch(`https://discord.com/api/v10/channels/${DISCORD_CHANNEL_ID}`, {
