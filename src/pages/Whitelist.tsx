@@ -344,7 +344,7 @@ const Whitelist = () => {
                 Tu dois te connecter avec ton compte Discord pour envoyer ta candidature.
               </p>
               <a
-                href={getDiscordOAuthUrl()}
+                href={discordClientId ? getDiscordOAuthUrl(discordClientId) : "#"}
                 className="btn-primary py-3 px-8 text-lg font-semibold flex items-center gap-3 rounded-lg no-underline"
               >
                 <LogIn className="w-5 h-5" />
