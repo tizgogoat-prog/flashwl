@@ -1,32 +1,34 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import nacl from "https://esm.sh/tweetnacl@1.0.3";
 
 const DISCORD_API = 'https://discord.com/api/v10';
 
-// Verify Discord interaction signature
-async function verifyDiscordSignature(req: Request, publicKey: string): Promise<{ valid: boolean; body: string }> {
-  const signature = req.headers.get('x-signature-ed25519');
-  const timestamp = req.headers.get('x-signature-timestamp');
-  const body = await req.text();
+function hexToUint8Array(hex: string): Uint8Array {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2) {
+    bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16);
+  }
+  return bytes;
+}
 
-  if (!signature || !timestamp) return { valid: false, body };
+// Verify Discord interaction signature using tweetnacl
+function verifyDiscordSignature(req: Request, publicKey: string): { valid: boolean; body: string } | Promise<{ valid: boolean; body: string }> {
+  return (async () => {
+    const signature = req.headers.get('x-signature-ed25519');
+    const timestamp = req.headers.get('x-signature-timestamp');
+    const body = await req.text();
 
-  const encoder = new TextEncoder();
-  const message = encoder.encode(timestamp + body);
+    if (!signature || !timestamp) return { valid: false, body };
 
-  const keyBytes = new Uint8Array(publicKey.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
-  const sigBytes = new Uint8Array(signature.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
+    const encoder = new TextEncoder();
+    const message = encoder.encode(timestamp + body);
+    const sigBytes = hexToUint8Array(signature);
+    const keyBytes = hexToUint8Array(publicKey);
 
-  const cryptoKey = await crypto.subtle.importKey(
-    'raw',
-    keyBytes,
-    { name: 'Ed25519', namedCurve: 'Ed25519' },
-    false,
-    ['verify']
-  );
-
-  const valid = await crypto.subtle.verify('Ed25519', cryptoKey, sigBytes, message);
-  return { valid, body };
+    const valid = nacl.sign.detached.verify(message, sigBytes, keyBytes);
+    return { valid, body };
+  })();
 }
 
 serve(async (req) => {
