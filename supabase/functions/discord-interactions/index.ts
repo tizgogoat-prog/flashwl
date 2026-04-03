@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import nacl from "https://cdn.skypack.dev/tweetnacl@v1.0.3?dts";
+import nacl from "npm:tweetnacl@1.0.3";
 
 const DISCORD_API = 'https://discord.com/api/v10';
 
