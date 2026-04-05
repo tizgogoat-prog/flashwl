@@ -100,7 +100,7 @@ function getStatusActionConfig(action: string): StatusActionConfig | null {
         statusEmoji: "⏳",
         statusLabel: "En attente (Vocal WL)",
         embedColor: 0xf59e0b,
-        dmDescription: (prenom) => `Bonjour **${prenom}**, ta candidature est **en attente**.\nTu seras convoqué(e) pour un vocal WL prochainement.`,
+        dmDescription: (prenom) => `Bonjour **${prenom}**, ta candidature est **en attente**.\nTu es attendu(e) dans le salon **Attente Aide Vocal** pour un entretien WL. 🎙️`,
       };
     default:
       return null;
