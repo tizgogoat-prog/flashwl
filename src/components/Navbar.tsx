@@ -11,7 +11,6 @@ const Navbar = () => {
     { name: "ACCUEIL", path: "/" },
     { name: "RÈGLEMENT", path: "/reglement" },
     { name: "STREAMERS", path: "/streamers" },
-    { name: "WHITELIST", path: "/whitelist" },
   ];
 
   return (
